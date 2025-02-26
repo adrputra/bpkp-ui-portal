@@ -1,6 +1,6 @@
 {
-  "publicURL": "http://localhost:8002/api",
-  "baseURL": "http://localhost:8002/api/service",
+  "publicURL": "https://bpkp-portal.eventarry.com/api",
+  "baseURL": "https://bpkp-portal.eventarry.com/api/service",
   "unsplash": {
     "base": "https://api.unsplash.com",
     "random": "/photos/random"
