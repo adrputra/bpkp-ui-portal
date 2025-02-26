@@ -1,14 +1,11 @@
 import { IconCirclePlus } from '@tabler/icons-react';
 import { Button, Group, Paper, Select, Text } from '@mantine/core';
-import SearchBar from '@/components/molecules/SearchBar';
 
 export default function TableHeader() {
   return (
     <Paper p="sm" shadow="md" w="100%" bg='white'>
       <Group justify="space-between">
-        <Group>
-          <SearchBar />
-        </Group>
+        <Group/>
         <Group>
           <Text size='xl' fw='bold'>Student List</Text>
         </Group>
