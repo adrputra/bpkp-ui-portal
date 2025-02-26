@@ -4,36 +4,33 @@ import { ActionIcon, Button, Center, Group, Stack, TableData } from '@mantine/co
 import { useDisclosure } from '@mantine/hooks';
 import TableBody from '@/components/molecules/TableBody';
 import TableHeader from '@/components/molecules/TableHeader';
-import AddForm from '@/components/organisms/Role/AddForm';
 import { formatDate } from '@/libs/utils';
 import { useRoleStore } from '@/store/role';
+import AddFormRole from '@/components/organisms/Role/AddFormRole';
 
 export default function RoleList() {
-  const { roleMapping, getRoleMapping, resetRoleStore } = useRoleStore();
+  const { roleList, getRoleList, resetRoleStore } = useRoleStore();
   const [filter, setFilter] = useState<string>('');
   const [opened, { open, close }] = useDisclosure(false);
 
   useEffect(() => {
-    getRoleMapping();
+    getRoleList();
     return () => {
       resetRoleStore();
     };
   }, []);
 
   const tableData: TableData = {
-    head: ['ID', 'Menu Name', 'Role Name', 'Menu Route', 'Access Method', 'Date', 'Action'],
-    body: roleMapping
+    head: ['Role Name', 'Role Name', 'Created At', 'Action'],
+    body: roleList
       .filter(
         (value) =>
-          value.menu_name.toLowerCase().includes(filter) ||
-          value.role_name.toLowerCase().includes(filter)
+          value.role_name.toLowerCase().includes(filter) ||
+          value.role_desc.toLowerCase().includes(filter)
       )
       .map((value) => [
-        value.id,
-        value.menu_name,
         value.role_name,
-        value.menu_route,
-        value.access_method,
+        value.role_desc,
         formatDate(value.created_at),
         <Group>
           <ActionIcon variant="default" style={{ border: 'none' }}>
@@ -57,11 +54,11 @@ export default function RoleList() {
   return (
     <Center>
       <Stack p="sm" w="100%">
-        <TableHeader title='Role Mapping List' setFilter={setFilter} ActionButton={<ActionButton />} />
+        <TableHeader title='Role List' setFilter={setFilter} ActionButton={<ActionButton />} />
         <TableBody tableData={tableData} />
       </Stack>
 
-      <AddForm open={opened} close={close} />
+      <AddFormRole open={opened} close={close} />
     </Center>
   );
 }

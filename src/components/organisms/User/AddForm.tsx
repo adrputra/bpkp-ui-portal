@@ -5,6 +5,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { createNewUser } from '@/api/user';
 import RoleInputSelection from '@/components/atoms/RoleInputSelection';
 import { useAuthStore } from '@/store/auth';
+import InstitutionCodeSelection from '@/components/atoms/InstitutionCodeSelection';
 
 interface Props {
   open: boolean;
@@ -64,7 +65,7 @@ export default function AddForm({ open, close }: Props) {
       <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
         <Stack my="md">
           <Group grow align="flex-start">
-            <TextInput withAsterisk required label="Username" {...form.getInputProps('username')} />
+            <TextInput withAsterisk required label="NIP" {...form.getInputProps('username')} />
             <TextInput withAsterisk required label="Email" {...form.getInputProps('email')} />
           </Group>
           <Group grow align="flex-start">
@@ -84,11 +85,11 @@ export default function AddForm({ open, close }: Props) {
             />
           </Group>
           <Group grow align="flex-start">
-            <TextInput withAsterisk required label="Fullname" {...form.getInputProps('fullname')} />
+            <TextInput withAsterisk required label="Full Name" {...form.getInputProps('fullname')} />
             <TextInput
               withAsterisk
               required
-              label="Shortname"
+              label="Short Name"
               {...form.getInputProps('shortname')}
             />
           </Group>
@@ -100,13 +101,20 @@ export default function AddForm({ open, close }: Props) {
               placeholder="Select Role"
               {...form.getInputProps('role_id')}
             />
-            <TextInput
+            <InstitutionCodeSelection 
+              withAsterisk
+              required
+              label="Institution"
+              placeholder="Select Institution"
+              {...form.getInputProps('institution_id')}
+            />
+            {/* <TextInput
               withAsterisk
               required
               label="Institution ID"
               value={institutionID}
               disabled
-            />
+            /> */}
           </Group>
         </Stack>
 

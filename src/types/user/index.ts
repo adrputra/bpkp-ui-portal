@@ -7,15 +7,10 @@ interface User {
     role_id: string;
     institution_id: string;
     created_at: string;
-}
-
-interface RequestNewUser {
-    username: string;
-    email: string;
-    fullname: string;
-    shortname: string;
+  }
+  
+  interface RequestNewUser extends Omit<User, 'created_at'> {
     password: string;
     confirmPassword: string;
-    role_id: string;
-    institution_id: string;
-}
+  }
+  

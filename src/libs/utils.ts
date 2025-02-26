@@ -170,3 +170,13 @@ export async function deleteAllIndexedDBs(): Promise<void> {
     console.error('Error retrieving databases:', error);
   }
 }
+
+export function isToday(val: string): boolean {
+  const today = new Date();
+  const date = new Date(val)
+  return (
+    date.getFullYear() === today.getFullYear() &&
+    date.getMonth() === today.getMonth() &&
+    date.getDate() === today.getDate()
+  );
+}

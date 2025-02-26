@@ -1,15 +1,18 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import AppShellWrapper from './components/templates/AppShell';
+import AppShellWrapper from './components/template/AppShell';
 import { authenticator } from './libs/authenticator';
 import Login from './pages/login';
 import UserProfile from './pages/user/UserProfile';
 import StudentList from './pages/student/StudentList';
-import RoleList from './pages/role/RoleList';
 import MenuList from './pages/menu/MenuList';
 import UserList from './pages/user/UserList';
 import Dataset from './pages/dataset';
 import DatasetDetail from './pages/dataset/detail';
 import Parameter from './pages/parameter';
+import RoleMappingList from './pages/role/RoleMappingList';
+import RoleList from './pages/role/RoleList';
+import Dashboard from './pages/dashboard/Dashboard';
+import InstitutionList from './pages/institution';
 
 const router = createBrowserRouter([
   {
@@ -22,7 +25,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <RoleList />,
+        element: <Dashboard />,
         loader: authenticator,
       },
       {
@@ -51,6 +54,11 @@ const router = createBrowserRouter([
         loader: authenticator,
       },
       {
+        path: '/rolemapping',
+        element: <RoleMappingList />,
+        loader: authenticator,
+      },
+      {
         path: '/experimental',
         element: <Parameter />,
         loader: authenticator,
@@ -68,6 +76,11 @@ const router = createBrowserRouter([
       {
         path: '/parameter',
         element: <Parameter />,
+        loader: authenticator,
+      },
+      {
+        path: '/institution',
+        element: <InstitutionList />,
         loader: authenticator,
       },
     ],

@@ -1,6 +1,8 @@
 import { useCallback } from 'react';
 import {
+  IconAdjustmentsX,
   IconBrandDatabricks,
+  IconBuildings,
   IconCategory,
   IconCircles,
   IconClockHour5,
@@ -23,6 +25,9 @@ export default function SidebarIcon({ page }: { page: string }) {
     if (page === '/role') {
       return <IconCircles />;
     }
+    if (page === '/rolemapping') {
+      return <IconAdjustmentsX />;
+    }
     if (page === '/menu') {
       return <IconCategory />;
     }
@@ -37,6 +42,9 @@ export default function SidebarIcon({ page }: { page: string }) {
     }
     if (page === '/parameter') {
       return <IconIndentIncrease />;
+    }
+    if (page === '/institution') {
+      return <IconBuildings />;
     }
     return <IconClockHour5 />;
   }, []);

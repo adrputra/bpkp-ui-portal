@@ -6,7 +6,7 @@ export default function LogoHeader() {
     <Group>
       <Logo />
       <Text size="lg" fw={900}>
-        Digital Learning
+        Portal BPKP
       </Text>
     </Group>
   );

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { showNotification } from '@mantine/notifications';
-import { createNewUser, getAllUser, getInstitutionList } from '@/api/user';
+import { createNewUser, getAllUser } from '@/api/user';
 import { useLayoutStore } from '../layout';
 
 const { showLoading, hideLoading } = useLayoutStore.getState();
@@ -11,9 +11,6 @@ interface UserStore {
   getUserList: () => void;
 
   createNewUser: (req: RequestNewUser) => void;
-
-  institutionList: string[]
-  getInstitutionList: () => void
 
   resetUserStore: () => void;
 }
@@ -44,15 +41,6 @@ export const useUserStore = create<UserStore>()((set) => ({
       .finally(() => {
         hideLoading();
       });
-  },
-
-  institutionList: [],
-  getInstitutionList: async () => {
-    getInstitutionList().then((res) => {
-      if (res.code === 200) {
-        set({ institutionList: res.data });
-      }
-    });
   },
 
   resetUserStore: () => {

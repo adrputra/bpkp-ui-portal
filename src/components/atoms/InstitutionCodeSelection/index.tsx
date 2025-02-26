@@ -1,4 +1,4 @@
-import { useUserStore } from '@/store/user';
+import { useInstitutionStore } from '@/store/institution';
 import { Loader, Select, SelectProps } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 
@@ -13,14 +13,18 @@ export default function InstitutionCodeSelection({
   searchable = true,
   ...props
 }: Props) {
-    const { institutionList, getInstitutionList } = useUserStore();
+    const { institutionList, getInstitutionList } = useInstitutionStore();
     const [opened, { toggle }] = useDisclosure(false);
       
+    const data = institutionList.map((value) => ({
+        value: value.id,
+        label: value.name,
+    }))
   return (
     <Select
       {...props}
       placeholder={placeholder}
-      data={institutionList}
+      data={data}
       searchable={searchable}
       nothingFoundMessage={nothingFoundMessage}
       onDropdownOpen={getInstitutionList}

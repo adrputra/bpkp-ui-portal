@@ -36,14 +36,10 @@ interface Role {
   is_active: boolean;
 }
 
-interface RequestNewMenu {
-  id: string;
-  menu_name: string;
-  menu_route: string;
+interface RequestNewMenu extends Pick<Menu, 'id' | 'menu_name' | 'menu_route'> {}
+
+interface RequestNewRoleMapping extends Pick<RoleMapping, 'id' | 'role_id' | 'access_method'> {
+  menu_id: string;
 }
 
-interface RequestNewRoleMapping {
-  role_id: string;
-  menu_id: string;
-  access_method: string;
-}
+interface RequestNewRole extends Pick<Role, 'role_name' | 'role_desc'> {}

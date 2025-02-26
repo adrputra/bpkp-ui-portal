@@ -21,7 +21,7 @@ export default function UserList() {
   }, []);
 
   const tableData: TableData = {
-    head: ['ID', 'User Name', 'Full Name', 'Institution ID', 'Date Created', 'Action'],
+    head: ['NIP', 'Email', 'Full Name', 'Institution ID', 'Date Created', 'Action'],
     body: userList
       .filter(
         (user) =>

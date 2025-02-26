@@ -1,13 +1,23 @@
 import { create } from 'zustand';
-import { deleteMenu, inquiryMenu } from '@/api/menu';
-import { inquiryRoleList, inquiryRoleMapping } from '@/api/role';
-import { getFromIDB, storeToIDB } from '@/libs/utils';
 import { showNotification } from '@mantine/notifications';
+import { deleteMenu, inquiryMenu } from '@/api/menu';
+import {
+  createNewRole,
+  createNewRoleMapping,
+  deleteRoleMapping,
+  inquiryRoleList,
+  inquiryRoleMapping,
+} from '@/api/role';
+import { clearIndexedDB, getFromIDB, storeToIDB } from '@/libs/utils';
+import { useLayoutStore } from '../layout';
 
 interface RoleStore {
   roleMapping: RoleMapping[];
   setRoleMapping: (roleMapping: RoleMapping[]) => void;
   getRoleMapping: () => void;
+  createRoleMapping: (request: RequestNewRoleMapping) => void;
+  updateRoleMapping: (request: RequestNewRoleMapping) => void;
+  deleteRoleMapping: (id: string) => void;
 
   menuList: Menu[];
   setMenuList: (menuList: Menu[]) => void;
@@ -17,18 +27,62 @@ interface RoleStore {
   roleList: Role[];
   setRoleList: (roleList: Role[]) => void;
   getRoleList: () => void;
+  addNewRole: (request: RequestNewRole) => Promise<void>;
 
   resetRoleStore: () => void;
 }
+
+const { showLoading, hideLoading } = useLayoutStore.getState();
 
 export const useRoleStore = create<RoleStore>()((set) => ({
   roleMapping: [],
   setRoleMapping: (roleMapping: RoleMapping[]) => set({ roleMapping }),
 
-  getRoleMapping: () => {
-    inquiryRoleMapping().then((res) => {
+  getRoleMapping: async () => {
+    showLoading();
+    await inquiryRoleMapping()
+      .then((res) => {
+        if (res.code === 200) {
+          set({ roleMapping: res.data });
+        }
+      })
+      .finally(() => {
+        hideLoading();
+      });
+  },
+
+  createRoleMapping: async (request: RequestNewRoleMapping) => {
+    await createNewRoleMapping(request).then((res) => {
       if (res.code === 200) {
-        set({ roleMapping: res.data });
+        showNotification({
+          color: 'green',
+          title: 'Success',
+          message: res.message,
+        });
+      }
+    });
+  },
+
+  updateRoleMapping: async (request: RequestNewRoleMapping) => {
+    await createNewRoleMapping(request).then((res) => {
+      if (res.code === 200) {
+        showNotification({
+          color: 'green',
+          title: 'Success',
+          message: res.message,
+        });
+      }
+    });
+  },
+
+  deleteRoleMapping: async (id: string) => {
+    await deleteRoleMapping(id).then((res) => {
+      if (res.code === 200) {
+        showNotification({
+          color: 'green',
+          title: 'Success',
+          message: res.message,
+        });
       }
     });
   },
@@ -73,9 +127,8 @@ export const useRoleStore = create<RoleStore>()((set) => ({
           title: 'Success',
           message: res.message,
         });
-        useRoleStore.getState().getMenuList();
       }
-    })
+    });
   },
 
   roleList: [],
@@ -108,6 +161,20 @@ export const useRoleStore = create<RoleStore>()((set) => ({
           }
         });
       });
+  },
+
+  addNewRole: async (request: RequestNewRole) => {
+    await createNewRole(request).then((res) => {
+      if (res.code === 200) {
+        showNotification({
+          color: 'green',
+          title: 'Success',
+          message: res.message,
+        });
+        clearIndexedDB('param');
+        useRoleStore.getState().getRoleList();
+      }
+    });
   },
 
   resetRoleStore: () => {

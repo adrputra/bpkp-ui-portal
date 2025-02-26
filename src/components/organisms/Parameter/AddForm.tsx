@@ -51,7 +51,7 @@ export default function AddForm({ open, close, isEdit = false, data }: Props) {
         description: '',
       });
     };
-  }, [data, isEdit]);
+  }, [open]);
 
   return (
     <Modal

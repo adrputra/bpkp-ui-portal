@@ -5,9 +5,9 @@ import { sendRequestGET, sendRequestPOST } from '@/libs/sendRequest';
 import { useAuthStore } from '@/store/auth';
 import { useMenuStore } from '@/store/menu';
 
-export const getAllUser = async () => {
+export const getInstitutionList = async () => {
   try {
-    console.info('[REQ GET ALL USER]');
+    console.info('[REQ GET INSTITUTION LIST]');
     const auth = useMenuStore.getState();
     const menu_id = findMenuID(auth.menuList, '/');
     const header = {
@@ -16,11 +16,11 @@ export const getAllUser = async () => {
       }),
       ...(menu_id && { 'app-menu-id': menu_id }),
     };
-    const response = await sendRequestGET(`${endpoint.baseURL}${endpoint.user}`, header);
+    const response = await sendRequestGET(`${endpoint.baseURL}${endpoint.institution}`, header);
 
     return response;
   } catch (error: any) {
-    console.error('[GET ALL USER ERROR]', error);
+    console.error('[GET INSTITUTION LIST ERROR]', error);
     showNotification({
       color: 'red',
       title: 'Request Error',
@@ -29,9 +29,9 @@ export const getAllUser = async () => {
   }
 };
 
-export const createNewUser = async (req: RequestNewUser) => {
+export const addNewInstitution = async (req: RequestNewInstitution) => {
   try {
-    console.info('[REQ CREATE NEW USER]', req);
+    console.info('[REQ ADD NEW INSTITUTION]', req);
     const auth = useMenuStore.getState();
     const menu_id = findMenuID(auth.menuList, '/');
     const header = {
@@ -40,11 +40,15 @@ export const createNewUser = async (req: RequestNewUser) => {
       }),
       ...(menu_id && { 'app-menu-id': menu_id }),
     };
-    const response = await sendRequestPOST(`${endpoint.publicURL}${endpoint.register}`, req, header);
+    const response = await sendRequestPOST(
+      `${endpoint.baseURL}${endpoint.institution}`,
+      req,
+      header
+    );
 
     return response;
   } catch (error: any) {
-    console.error('[CREATE NEW USER ERROR]', error);
+    console.error('[ADD NEW INSTITUTION ERROR]', error);
     showNotification({
       color: 'red',
       title: 'Request Error',
