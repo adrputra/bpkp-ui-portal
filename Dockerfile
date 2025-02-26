@@ -13,6 +13,7 @@ COPY . .
 
 # Build the Vite project for production
 RUN bun run build
+RUN bun add -g serve
 
 # Stage 2: Use the same image for the runtime to avoid issues with static dependencies
 FROM oven/bun:1.1.27-alpine
@@ -23,7 +24,7 @@ COPY --from=builder /app /app
 WORKDIR /app
 
 # Expose the port your production server will run on
-EXPOSE 3000
+EXPOSE 3001
 
 # Set the command to run the production server
-CMD ["bun", "run", "serve"]
+CMD ["bun", "run", "preview"]
