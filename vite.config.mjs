@@ -9,4 +9,12 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: './vitest.setup.mjs',
   },
+  server: {
+    host: '0.0.0.0', // Allow access from outside
+    port: 3002, // Run on port 3002
+  },
+  preview: {
+    host: '0.0.0.0',
+    port: 3002, // Also make sure preview mode runs on 3002
+  },
 });
