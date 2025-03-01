@@ -13,6 +13,7 @@ import RoleMappingList from './pages/role/RoleMappingList';
 import RoleList from './pages/role/RoleList';
 import Dashboard from './pages/dashboard/Dashboard';
 import InstitutionList from './pages/institution';
+import AttendanceList from './pages/attendance/AttendanceList';
 
 const router = createBrowserRouter([
   {
@@ -81,6 +82,11 @@ const router = createBrowserRouter([
       {
         path: '/institution',
         element: <InstitutionList />,
+        loader: authenticator,
+      },
+      {
+        path: '/attendance',
+        element: <AttendanceList />,
         loader: authenticator,
       },
     ],

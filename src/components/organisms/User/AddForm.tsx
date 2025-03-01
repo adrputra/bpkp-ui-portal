@@ -13,7 +13,6 @@ interface Props {
 }
 
 export default function AddForm({ open, close }: Props) {
-  const { institutionID } = useAuthStore();
   const [loading, setLoading] = useDisclosure(false);
 
   const form = useForm<RequestNewUser>({
@@ -27,7 +26,7 @@ export default function AddForm({ open, close }: Props) {
       fullname: '',
       shortname: '',
       role_id: '',
-      institution_id: institutionID,
+      institution_id: '',
     },
     validate: {
       username: (value) => (value.length < 4 ? 'Invalid Username or Email' : null),

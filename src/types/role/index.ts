@@ -16,6 +16,7 @@ interface RoleMapping {
 interface Menu {
   access_method: string;
   id: string;
+  menu_id: string;
   menu_name: string;
   menu_route: string;
   role_id: string;

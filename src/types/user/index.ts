@@ -5,7 +5,9 @@ interface User {
     fullname: string;
     shortname: string;
     role_id: string;
+    role_name: string;
     institution_id: string;
+    institution_name: string;
     created_at: string;
   }
   

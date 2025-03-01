@@ -31,7 +31,7 @@ export const getTodayAttendance = async () => {
     });
   }
 };
-export const checkIn = async (request: RequestAttendance) => {
+export const checkIn = async (request: any) => {
   try {
     console.info('[REQ CHECK IN]');
     const auth = useMenuStore.getState();
@@ -60,7 +60,7 @@ export const checkIn = async (request: RequestAttendance) => {
 };
 
 
-export const checkOut = async (request: RequestAttendance) => {
+export const checkOut = async (request: any) => {
   try {
     console.info('[REQ CHECK OUT]');
     const auth = useMenuStore.getState();
@@ -80,6 +80,34 @@ export const checkOut = async (request: RequestAttendance) => {
     return response;
   } catch (error: any) {
     console.error('[CHECK OUT ERROR]', error);
+    showNotification({
+      color: 'red',
+      title: 'Request Error',
+      message: error?.response?.data?.message || error?.response?.data || error?.message,
+    });
+  }
+};
+
+export const getUserAttendances = async (request: RequestAttendance) => {
+  try {
+    console.info('[REQ GET USER ATTENDANCES]');
+    const auth = useMenuStore.getState();
+    const menu_id = findMenuID(auth.menuList, '/');
+    const header = {
+      ...(useAuthStore.getState().token && {
+        Authorization: `Bearer ${useAuthStore.getState().token}`,
+      }),
+      ...(menu_id && { 'app-menu-id': menu_id }),
+    };
+    const response = await sendRequestPOST(
+      `${endpoint.baseURL}${endpoint.attendance}`,
+      request,
+      header
+    );
+    console.info('[RES GET USER ATTENDANCES]', response);
+    return response;
+  } catch (error: any) {
+    console.error('[GET USER ATTENDANCES ERROR]', error);
     showNotification({
       color: 'red',
       title: 'Request Error',

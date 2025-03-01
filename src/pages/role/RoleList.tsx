@@ -21,7 +21,7 @@ export default function RoleList() {
   }, []);
 
   const tableData: TableData = {
-    head: ['Role Name', 'Role Name', 'Created At', 'Action'],
+    head: ['Name', 'Description', 'Created At', 'Action'],
     body: roleList
       .filter(
         (value) =>
@@ -31,7 +31,7 @@ export default function RoleList() {
       .map((value) => [
         value.role_name,
         value.role_desc,
-        formatDate(value.created_at),
+        `${formatDate(value.created_at)} by ${value.created_by}`,
         <Group>
           <ActionIcon variant="default" style={{ border: 'none' }}>
             <IconEdit size={20} color="blue" />

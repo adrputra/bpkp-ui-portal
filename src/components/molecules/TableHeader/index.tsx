@@ -19,12 +19,12 @@ export default function TableHeader({ title, setFilter, ActionButton }: Props) {
           </Text>
         </Group>
         <Group>
-          <Select
+          {/* <Select
             placeholder="Pick value"
             allowDeselect
             defaultValue="React"
             data={['React', 'Angular', 'Vue', 'Svelte']}
-          />
+          /> */}
           {ActionButton}
         </Group>
       </Group>

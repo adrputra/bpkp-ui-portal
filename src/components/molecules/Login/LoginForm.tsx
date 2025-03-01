@@ -11,7 +11,16 @@ import { useMenuStore } from '@/store/menu';
 
 export default function LoginFormMolecule() {
   const { setMenuList } = useMenuStore();
-  const { setToken, setInstitutionID } = useAuthStore();
+  const {
+    setUsername,
+    setFullname,
+    setRole,
+    setRoleName,
+    setShortname,
+    setToken,
+    setInstitutionID,
+    setInstitutionName,
+  } = useAuthStore();
   const navigate = useNavigate();
   const [loading, setLoading] = useDisclosure(false);
 
@@ -31,9 +40,15 @@ export default function LoginFormMolecule() {
     setLoading.open();
     try {
       const res = await doLogin(values);
+      setUsername(res.data.username);
+      setFullname(res.data.fullname);
+      setShortname(res.data.shortname);
       setMenuList(res.data.menu_mapping);
+      setRole(res.data.role);
       setToken(res.data.token);
+      setRoleName(res.data.role_name);
       setInstitutionID(res.data.institution_id);
+      setInstitutionName(res.data.institution_name);
       navigate('/');
     } catch (error) {
       showNotification({ status: 'error', message: 'Login Failed' });

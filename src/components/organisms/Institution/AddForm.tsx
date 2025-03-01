@@ -22,7 +22,7 @@ export default function AddForm({ open, close }: Props) {
     },
     validate: {
       phone_number: (value) =>
-        /^(?:\+62|62|0)8[1-9][0-9]{6,10}$/.test(value) ? null : 'Please enter a valid phone number',
+        /^\d{5,13}$/.test(value) ? null : 'Please enter a valid phone number',
       email: (value) =>
         /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/.test(value)
           ? null
@@ -49,17 +49,35 @@ export default function AddForm({ open, close }: Props) {
       closeOnClickOutside={false}
     >
       <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
-      <Stack my="md">
-          <TextInput withAsterisk required label="Name" name='name' {...form.getInputProps('name')} />
-          <Textarea withAsterisk required label="Address" name='address' {...form.getInputProps('address')} />
+        <Stack my="md">
+          <TextInput
+            withAsterisk
+            required
+            label="Name"
+            name="name"
+            {...form.getInputProps('name')}
+          />
+          <Textarea
+            withAsterisk
+            required
+            label="Address"
+            name="address"
+            {...form.getInputProps('address')}
+          />
           <TextInput
             withAsterisk
             required
             label="Phone Number"
-            name='phone_number'
+            name="phone_number"
             {...form.getInputProps('phone_number')}
           />
-          <TextInput withAsterisk required label="Email" name='email' {...form.getInputProps('email')} />
+          <TextInput
+            withAsterisk
+            required
+            label="Email"
+            name="email"
+            {...form.getInputProps('email')}
+          />
         </Stack>
 
         <Button fullWidth type="submit" mt="xl" loading={loading} loaderProps={{ type: 'dots' }}>

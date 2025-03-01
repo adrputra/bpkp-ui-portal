@@ -1,3 +1,4 @@
+import { useAuthStore } from '@/store/auth';
 import axios from 'axios';
 
 const Request = (headers: any) => {
@@ -8,9 +9,14 @@ const Request = (headers: any) => {
 };
 
 export const sendRequestGET = async (baseURL: string, header?: any) => {
+  const roleID = useAuthStore.getState().role;
   const headers = {
     ...header,
+    ...(roleID && { 'app-role-id': roleID }),
+
   };
+
+  console.log('HEADER', roleID);
 
   if (!header || !header['Content-Type']) {
     headers['Content-Type'] = 'application/json';
@@ -31,8 +37,11 @@ export const sendRequestGET = async (baseURL: string, header?: any) => {
 };
 
 export const sendRequestPOST = async (baseURL: string, body?: any, header?: any) => {
+  const roleID = useAuthStore.getState().role;
   const headers = {
     ...header,
+    ...(roleID && { 'app-role-id': roleID }),
+
   };
 
   if (!header || !header['Content-Type']) {
@@ -54,8 +63,11 @@ export const sendRequestPOST = async (baseURL: string, body?: any, header?: any)
 };
 
 export const sendRequestPUT = async (baseURL: string, body?: any, header?: any) => {
+  const roleID = useAuthStore.getState().role;
   const headers = {
     ...header,
+    ...(roleID && { 'app-role-id': roleID }),
+
   };
 
   if (!header || !header['Content-Type']) {
@@ -77,8 +89,11 @@ export const sendRequestPUT = async (baseURL: string, body?: any, header?: any) 
 };
 
 export const sendRequestDELETE = async (baseURL: string, header?: any) => {
+  const roleID = useAuthStore.getState().role;
   const headers = {
     ...header,
+    ...(roleID && { 'app-role-id': roleID }),
+
   };
 
   if (!header || !header['Content-Type']) {

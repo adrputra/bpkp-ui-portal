@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { IconCirclePlus, IconEdit, IconTrash } from '@tabler/icons-react';
-import { ActionIcon, Button, Center, Group, Stack, TableData } from '@mantine/core';
+import { ActionIcon, Button, Center, Group, Stack, TableData, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import TableBody from '@/components/molecules/TableBody';
 import TableHeader from '@/components/molecules/TableHeader';
@@ -21,7 +21,7 @@ export default function UserList() {
   }, []);
 
   const tableData: TableData = {
-    head: ['NIP', 'Email', 'Full Name', 'Institution ID', 'Date Created', 'Action'],
+    head: ['NIP', 'Email', 'Full Name', 'Institution', 'Role', 'Date Created', 'Action'],
     body: userList
       .filter(
         (user) =>
@@ -33,7 +33,10 @@ export default function UserList() {
         value.username,
         value.email,
         value.fullname,
-        value.institution_id,
+        <Text fz="sm" style={{ maxWidth: '25vw' }}>
+          {value.institution_name}
+        </Text>,
+        value.role_name,
         formatDate(value.created_at),
         <Group>
           <ActionIcon variant="default" style={{ border: 'none' }}>

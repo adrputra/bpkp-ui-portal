@@ -7,8 +7,8 @@ export default function UserStatus() {
   const { userAttendance } = useAttendanceStore();
 
   const { statusText, statusColor } = useMemo(() => {
-    if (userAttendance.check_in === '--') {return { statusText: 'Not Checked In', statusColor: 'red' };}
-    if (userAttendance.check_out === '--') {return { statusText: 'Checked In', statusColor: 'green' };}
+    if (userAttendance.check_in === '') {return { statusText: 'Not Checked In', statusColor: 'red' };}
+    if (userAttendance.check_out === '') {return { statusText: 'Checked In', statusColor: 'green' };}
     return { statusText: 'Great Work Today!', statusColor: 'blue' };
   }, [userAttendance.check_in, userAttendance.check_out]);
 

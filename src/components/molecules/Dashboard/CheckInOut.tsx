@@ -1,12 +1,20 @@
 import { useEffect, useState } from 'react';
 import { Button, Divider, Group, Stack, Text, Textarea, Title } from '@mantine/core';
 import { useAttendanceStore } from '@/store/attendance';
+import { useAuthStore } from '@/store/auth';
 import { useThemeStore } from '@/store/theme';
+import ConfirmationDialogue from '../ConfirmationDialogue';
+
+type AttendanceAction = '' | 'in' | 'out';
 
 export default function CheckInOut() {
   const { isDarkMode, colors } = useThemeStore();
-  const { doCheckIn, userAttendance, getTodayAttendance } = useAttendanceStore();
+  const { username } = useAuthStore();
+  const { doCheckIn, doCheckOut, userAttendance, getTodayAttendance } = useAttendanceStore();
+  const [action, setAction] = useState<AttendanceAction>('');
   const [data, setData] = useState<RequestAttendance>({
+    username,
+    insitution_id: '',
     remarks: '',
   });
 
@@ -24,7 +32,7 @@ export default function CheckInOut() {
                 Check In
               </Title>
               <Text size="md" fw="bold">
-                {userAttendance.check_in}
+                {userAttendance.check_in || '--'}
               </Text>
             </Stack>
             <Divider orientation="vertical" size="md" color={isDarkMode ? 'white' : colors[1]} />
@@ -33,7 +41,7 @@ export default function CheckInOut() {
                 Check Out
               </Title>
               <Text size="md" fw="bold">
-                {userAttendance.check_out}
+                {userAttendance.check_out || '--'}
               </Text>
             </Stack>
           </Group>
@@ -41,19 +49,40 @@ export default function CheckInOut() {
             <Textarea
               label="Remarks"
               name="remarks"
-              onChange={() => setData({ remarks: data.remarks })}
+              onChange={(e) => setData({ ...data, remarks: e.target.value })}
             />
-            <Group justify='center' grow>
-              <Button color="green" onClick={() => doCheckIn(data)} radius="xl" size="md">
+            <Group justify="center" grow>
+              <Button
+                color="green"
+                disabled={userAttendance.check_in !== ''}
+                onClick={() => doCheckIn(data)}
+                radius="xl"
+                size="md"
+              >
                 Check In
               </Button>
-              <Button color="red" onClick={() => doCheckIn(data)} radius="xl" size="md">
+              <Button
+                color="red"
+                disabled={userAttendance.check_in === '' || userAttendance.check_out !== ''}
+                onClick={() => doCheckOut(data)}
+                radius="xl"
+                size="md"
+              >
                 Check Out
               </Button>
             </Group>
           </Stack>
         </Stack>
       </Group>
+      <ConfirmationDialogue
+        open={action !== ''}
+        title={action === 'in' ? 'Check In' : 'Check Out'}
+        close={() => {
+          setAction('');
+          setData({ ...data, remarks: '' });
+        }}
+        onConfirm={action === 'in' ? () => doCheckIn(data) : () => doCheckOut(data)}
+      />
     </Stack>
   );
 }
