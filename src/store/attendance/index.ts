@@ -39,10 +39,10 @@ export const useAttendanceStore = create<AttendanceStore>()((set) => ({
   userAttendance,
   attendanceList: [],
   doCheckIn: async (request: RequestAttendance) => {
-    const req: Pick<UserAttendance, 'username' | 'remark_out' | 'source_out'> = {
+    const req: Pick<UserAttendance, 'username' | 'remark_in' | 'source_in'> = {
       username: request.username,
-      remark_out: request.remarks,
-      source_out: 'web',
+      remark_in: request.remarks,
+      source_in: 'web',
     };
     showLoading();
     await checkIn(req)
@@ -88,7 +88,7 @@ export const useAttendanceStore = create<AttendanceStore>()((set) => ({
     showLoading();
     await getTodayAttendance()
       .then((res) => {
-        if (res.code === 200) {
+        if (res.code === 200 && res.data) {
           const checkInTime = isToday(res.data.check_in)
             ? new Date(res.data.check_in).toLocaleTimeString('en-US', {
                 timeZone: 'Asia/Bangkok',
@@ -118,12 +118,12 @@ export const useAttendanceStore = create<AttendanceStore>()((set) => ({
   getAttendanceList: async () => {
     showLoading();
     const request: RequestAttendance = {
-      username: '',
+      username: useAuthStore.getState().username,
       remarks: '',
       insitution_id: useAuthStore.getState().institutionID,
     }
     await getUserAttendances(request).then((res) => {
-      if (res.code === 200) {
+      if (res.code === 200 && res.data) {
         set({
           attendanceList: res.data,
         });

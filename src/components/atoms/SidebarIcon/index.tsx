@@ -3,6 +3,7 @@ import {
   IconAdjustmentsX,
   IconBrandDatabricks,
   IconBuildings,
+  IconCalendarWeek,
   IconCategory,
   IconCircles,
   IconClockHour5,
@@ -16,37 +17,33 @@ import IconContainer from '../IconContainer';
 
 export default function SidebarIcon({ page }: { page: string }) {
   const renderIcon = useCallback((page: string) => {
-    if (page === '/') {
-      return <IconHome />;
+    switch (page) {
+      case '/':
+        return <IconHome />;
+      case '/experimental':
+        return <IconFlask />;
+      case '/role':
+        return <IconCircles />;
+      case '/rolemapping':
+        return <IconAdjustmentsX />;
+      case '/menu':
+        return <IconCategory />;
+      case '/student':
+        return <IconSchool />;
+      case '/user':
+        return <IconUserSquareRounded />;
+      case '/dataset':
+        return <IconBrandDatabricks />;
+      case '/parameter':
+        return <IconIndentIncrease />;
+      case '/institution':
+        return <IconBuildings />;
+      case '/attendance':
+        return <IconCalendarWeek />;
+      default:
+        return <IconClockHour5 />;
     }
-    if (page === '/experimental') {
-      return <IconFlask />;
-    }
-    if (page === '/role') {
-      return <IconCircles />;
-    }
-    if (page === '/rolemapping') {
-      return <IconAdjustmentsX />;
-    }
-    if (page === '/menu') {
-      return <IconCategory />;
-    }
-    if (page === '/student') {
-      return <IconSchool />;
-    }
-    if (page === '/user') {
-      return <IconUserSquareRounded />;
-    }
-    if (page === '/dataset') {
-      return <IconBrandDatabricks />;
-    }
-    if (page === '/parameter') {
-      return <IconIndentIncrease />;
-    }
-    if (page === '/institution') {
-      return <IconBuildings />;
-    }
-    return <IconClockHour5 />;
   }, []);
+  
   return <IconContainer>{renderIcon(page.toLowerCase())}</IconContainer>;
 }

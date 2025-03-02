@@ -12,7 +12,7 @@ export default function TableHeader({ title, setFilter, ActionButton }: Props) {
   return (
     <Paper p="sm" shadow="md" w="100%">
       <Group justify="space-between">
-          {setFilter ? <SearchBar setFilter={setFilter} /> : <div />}
+        {setFilter ? <SearchBar setFilter={setFilter} /> : <div />}
         <Group>
           <Text size="xl" fw="bold">
             {title}

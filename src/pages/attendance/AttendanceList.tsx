@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Badge, Center, Stack, TableData, Text } from '@mantine/core';
+import { act, useEffect, useState } from 'react';
+import { Badge, Center, Stack, Switch, TableData, Text } from '@mantine/core';
 import TableBody from '@/components/molecules/TableBody';
 import TableHeader from '@/components/molecules/TableHeader';
 import { formatDate } from '@/libs/utils';
@@ -8,28 +8,54 @@ import { useAttendanceStore } from '@/store/attendance';
 export default function AttendanceList() {
   const [filter, setFilter] = useState<string>('');
   const { attendanceList, getAttendanceList } = useAttendanceStore();
+  const [showAll, setShowAll] = useState<boolean>(false);
 
   useEffect(() => {
     getAttendanceList();
   }, []);
 
   const renderStatus = (status: string) => {
-    if (status === 'Late') {
-      return (
-        <Badge size="sm" color="red">
-          Late
-        </Badge>
-      );
+    switch (status) {
+      case 'Late':
+        return (
+          <Badge size="sm" color="red">
+            Late
+          </Badge>
+        );
+      case 'On Time':
+        return (
+          <Badge size="sm" color="green">
+            On Time
+          </Badge>
+        );
+      case 'Normal':
+        return (
+          <Badge size="sm" color="green">
+            Normal
+          </Badge>
+        );
+      case 'Early':
+        return (
+          <Badge size="sm" color="red">
+            Early
+          </Badge>
+        );
+      default:
+        return <></>;
     }
-    return (
-      <Badge size="sm" color="green">
-        On Time
-      </Badge>
-    );
   };
 
   const tableData: TableData = {
-    head: ['No.', 'Name', 'Check In', 'Check Out', 'Remark In', 'Remark Out', 'Source In', 'Source Out'],
+    head: [
+      'No.',
+      'Name',
+      'Check In',
+      'Check Out',
+      'Remark In',
+      'Remark Out',
+      'Source In',
+      'Source Out',
+    ],
     body: attendanceList
       .filter(
         (item) =>
@@ -43,7 +69,7 @@ export default function AttendanceList() {
           {formatDate(item.check_in)} {renderStatus(item.status_in)}
         </Text>,
         <Text size="sm">
-          {formatDate(item.check_out)} {renderStatus(item.status_in)}
+          {formatDate(item.check_out)} {renderStatus(item.status_out)}
         </Text>,
         item.remark_in,
         item.remark_out,
@@ -52,10 +78,24 @@ export default function AttendanceList() {
       ]),
   };
 
+  const ActionButton = () => {
+    return (
+      <Switch
+        checked={showAll}
+        onChange={(e) => setShowAll(e.currentTarget.checked)}
+        label="Show All"
+      />
+    );
+  };
+
   return (
     <Center>
       <Stack p="sm" w="100%">
-        <TableHeader title="Attendance List" setFilter={setFilter} />
+        <TableHeader
+          title="Attendance List"
+          setFilter={setFilter}
+          ActionButton={<ActionButton />}
+        />
         <TableBody tableData={tableData} />
       </Stack>
     </Center>

@@ -11,7 +11,7 @@ interface User {
     created_at: string;
   }
   
-  interface RequestNewUser extends Omit<User, 'created_at'> {
+  interface RequestNewUser extends Omit<User, 'role_name' | 'institution_name' | 'created_at'> {
     password: string;
     confirmPassword: string;
   }
