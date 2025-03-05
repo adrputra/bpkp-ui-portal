@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 interface RequestAttendance {
   username: string;
-  insitution_id: string;
+  institution_id: string;
   remarks: string;
 }
 

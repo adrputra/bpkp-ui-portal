@@ -90,11 +90,12 @@ export const useRoleStore = create<RoleStore>()((set) => ({
   menuList: [],
   setMenuList: (menuList: Menu[]) => set({ menuList }),
 
-  getMenuList: () => {
-    getFromIDB<Menu[]>('param', 'param', 'menuList')
-      .then((res) => {
+  getMenuList: async () => {
+    showLoading()
+    await getFromIDB<Menu[]>('param', 'param', 'menuList')
+      .then(async (res) => {
         if (!res) {
-          inquiryMenu().then((apiRes) => {
+          await inquiryMenu().then((apiRes) => {
             if (apiRes.code === 200) {
               const menuData = apiRes.data;
               storeToIDB('param', 'param', 'menuList', menuData).then(() => {
@@ -106,9 +107,9 @@ export const useRoleStore = create<RoleStore>()((set) => ({
           set({ menuList: res });
         }
       })
-      .catch((error) => {
+      .catch(async (error) => {
         console.error('Error retrieving from IndexedDB:', error);
-        inquiryMenu().then((apiRes) => {
+        await inquiryMenu().then((apiRes) => {
           if (apiRes.code === 200) {
             const menuData = apiRes.data;
             storeToIDB('param', 'param', 'menuList', menuData).then(() => {
@@ -116,6 +117,8 @@ export const useRoleStore = create<RoleStore>()((set) => ({
             });
           }
         });
+      }).finally(() => {
+        hideLoading()
       });
   },
 

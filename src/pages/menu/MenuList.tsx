@@ -87,7 +87,7 @@ export default function MenuList() {
     closeDeleteForm();
   };
 
-  const onConfirm = async () => {
+  const onConfirmDelete = async () => {
     await deleteMenu(deleteID);
     onCloseDeleteForm();
     getMenuList();
@@ -105,7 +105,7 @@ export default function MenuList() {
         close={onCloseDeleteForm}
         title='Delete Menu'
         message="Are you sure you want to delete this menu?"
-        onConfirm={onConfirm}
+        onConfirm={onConfirmDelete}
       />
     </Center>
   );

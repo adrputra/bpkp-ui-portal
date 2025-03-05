@@ -16,6 +16,7 @@
   "logout": "/logout",
   "register": "/register",
   "user": "/user",
+  "userDetail": "/user/detail",
   "role": "/role",
   "createRole": "/role/create",
   "roleMapping": "/role/mapping",

@@ -25,6 +25,7 @@ export default function RoleList() {
     body: roleList
       .filter(
         (value) =>
+          value.id.toLowerCase().includes(filter) ||
           value.role_name.toLowerCase().includes(filter) ||
           value.role_desc.toLowerCase().includes(filter)
       )

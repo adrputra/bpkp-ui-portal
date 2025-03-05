@@ -1,4 +1,5 @@
 import { Avatar, Box, Group, Image, Stack, Text } from '@mantine/core';
+import { useUserStore } from '@/store/user';
 
 export function UserProfileHeaderImage() {
   return (
@@ -14,6 +15,8 @@ export function UserProfileHeaderImage() {
 }
 
 export function UserProfileHeaderInfo() {
+  const { userDetail } = useUserStore();
+
   return (
     <Group justify="flex-start" align="flex-start">
       <Avatar
@@ -27,9 +30,9 @@ export function UserProfileHeaderInfo() {
       <Group ml={20} mt={20} gap="xl">
         <Stack gap="xs">
           <Text size="xl" fw="bold">
-            User Name
+            {userDetail.fullname}
           </Text>
-          <Text size='sm'>User Role</Text>
+          <Text size="sm" fw="bold">{userDetail.role_name} - {userDetail.institution_name}</Text>
         </Stack>
       </Group>
     </Group>

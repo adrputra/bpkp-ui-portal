@@ -1,6 +1,7 @@
 import { addNewInstitution, getInstitutionList } from "@/api/institution";
 import { showNotification } from "@mantine/notifications";
 import { create } from "zustand";
+import { useLayoutStore } from "../layout";
 
 interface InstitutionStore {
     institutionList: Institution[]
@@ -10,9 +11,12 @@ interface InstitutionStore {
     resetInstitutionStore: () => void;
 }
 
+const { showLoading, hideLoading } = useLayoutStore.getState();
+
 export const useInstitutionStore = create<InstitutionStore>()((set) => ({
     institutionList: [],
     getInstitutionList: async () => {
+        showLoading();
         await getInstitutionList().then((res) => {
             if (res.code === 200 && res.data) {
                 set({ institutionList: res.data });
@@ -23,6 +27,8 @@ export const useInstitutionStore = create<InstitutionStore>()((set) => ({
                     message: res.message
                 })
             }
+        }).finally(() => {
+            hideLoading();
         })
     },
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, Modal, Stack, TextInput } from '@mantine/core';
+import { Button, Modal, Stack, Textarea, TextInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useParameterStore } from '@/store/parameter';
 
@@ -19,7 +19,7 @@ export default function AddForm({ open, close, isEdit = false, data }: Props) {
     description: '',
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setRequest({ ...request, [e.target.name]: e.target.value });
   };
 
@@ -73,11 +73,13 @@ export default function AddForm({ open, close, isEdit = false, data }: Props) {
             value={request.key}
             onChange={handleChange}
           />
-          <TextInput
+          <Textarea
             label="Value"
             placeholder="Value"
             required
             withAsterisk
+            autosize
+            maxRows={4}
             name="value"
             value={request.value}
             onChange={handleChange}

@@ -7,11 +7,17 @@ import TableHeader from '@/components/molecules/TableHeader';
 import AddForm from '@/components/organisms/User/AddForm';
 import { formatDate } from '@/libs/utils';
 import { useUserStore } from '@/store/user';
+import DeleteDialogue from '@/components/molecules/DeleteDialogue';
 
 export default function UserList() {
-  const { userList, getUserList, resetUserStore } = useUserStore();
+  const { userList, getUserList, deleteUser, resetUserStore } = useUserStore();
   const [filter, setFilter] = useState<string>('');
-  const [opened, { open, close }] = useDisclosure(false);
+  const [addFormOpened, { open: openAddForm, close: closeAddForm }] = useDisclosure(false);
+  const [deleteFormOpened, { open: openDeleteForm, close: closeDeleteForm }] = useDisclosure(false);
+  const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [data, setData] = useState<User>();
+  const [deleteID, setDeleteID] = useState<string>('');
+
 
   useEffect(() => {
     getUserList();
@@ -39,10 +45,15 @@ export default function UserList() {
         value.role_name,
         formatDate(value.created_at),
         <Group>
-          <ActionIcon variant="default" style={{ border: 'none' }}>
+          <ActionIcon
+            variant="default"
+            style={{ border: 'none' }}
+            onClick={() => handleEdit(value.username)}
+          >
             <IconEdit size={20} color="blue" />
           </ActionIcon>
-          <ActionIcon variant="default" style={{ border: 'none' }}>
+          <ActionIcon variant="default" style={{ border: 'none' }}
+          onClick={() => handleDelete(value.username)}>
             <IconTrash size={20} color="red" />
           </ActionIcon>
         </Group>,
@@ -51,15 +62,37 @@ export default function UserList() {
 
   const ActionButton = () => {
     return (
-      <Button leftSection={<IconCirclePlus />} onClick={open}>
+      <Button leftSection={<IconCirclePlus />} onClick={openAddForm}>
         Add
       </Button>
     );
   };
 
-  const onClose = async () => {
-    await getUserList();
-    close();
+  const handleEdit = (username: string) => {
+    setIsEdit(true);
+    setData(userList.find((value) => value.username === username));
+    openAddForm();
+  };
+
+  const handleDelete = (username: string) => {
+    setDeleteID(username);
+    openDeleteForm();
+  };
+
+  const onCloseAddForm = () => {
+    setIsEdit(false);
+    setData(undefined);
+    closeAddForm();
+  };
+
+  const onCloseDeleteForm = () => {
+    setDeleteID('');
+    closeDeleteForm();
+  };
+
+  const onConfirmDelete = async () => {
+    await deleteUser(deleteID);
+    onCloseDeleteForm();
   };
 
   return (
@@ -68,8 +101,14 @@ export default function UserList() {
         <TableHeader title="User List" setFilter={setFilter} ActionButton={<ActionButton />} />
         <TableBody tableData={tableData} />
       </Stack>
-
-      <AddForm open={opened} close={onClose} />
+      <AddForm open={addFormOpened} close={onCloseAddForm} isEdit={isEdit} data={data} />
+      <DeleteDialogue
+        open={deleteFormOpened}
+        close={onCloseDeleteForm}
+        title="Delete User"
+        message="Are you sure you want to delete this user?"
+        onConfirm={onConfirmDelete}
+      />
     </Center>
   );
 }

@@ -6,6 +6,7 @@ import { useMenuStore } from '@/store/menu';
 // Function to check if the user has access to the menu
 export const findAccessMenu = (path: string, menuList: Menu[] = []) => {
   // Use `some` to check if any menu matches the current route
+  console.log(path, menuList, `/${path.split('/')[1]}`);
   return menuList.some((menu) => menu.menu_route === path || menu.menu_route === `/${path.split('/')[1]}`);
 };
 

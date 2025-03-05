@@ -35,9 +35,9 @@ const router = createBrowserRouter([
         loader: authenticator,
       },
       {
-        path: '/user/profile',
+        path: '/profile/:id',
         element: <UserProfile />,
-        loader: authenticator,
+        // loader: authenticator,
       },
       {
         path: '/student',
@@ -60,8 +60,8 @@ const router = createBrowserRouter([
         loader: authenticator,
       },
       {
-        path: '/experimental',
-        element: <Parameter />,
+        path: '/experimental/:id',
+          element: <UserProfile />,
         loader: authenticator,
       },
       {

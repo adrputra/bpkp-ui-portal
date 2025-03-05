@@ -120,7 +120,7 @@ export const useAttendanceStore = create<AttendanceStore>()((set) => ({
     const request: RequestAttendance = {
       username: useAuthStore.getState().username,
       remarks: '',
-      insitution_id: useAuthStore.getState().institutionID,
+      institution_id: useAuthStore.getState().institutionID,
     }
     await getUserAttendances(request).then((res) => {
       if (res.code === 200 && res.data) {

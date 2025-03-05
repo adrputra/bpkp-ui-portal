@@ -1,14 +1,17 @@
-import { act, useEffect, useState } from 'react';
+import { act, ChangeEvent, useEffect, useState } from 'react';
 import { Badge, Center, Stack, Switch, TableData, Text } from '@mantine/core';
 import TableBody from '@/components/molecules/TableBody';
 import TableHeader from '@/components/molecules/TableHeader';
 import { formatDate } from '@/libs/utils';
 import { useAttendanceStore } from '@/store/attendance';
+import { useAuthStore } from '@/store/auth';
+import config from '@root/config.json';
 
 export default function AttendanceList() {
   const [filter, setFilter] = useState<string>('');
   const { attendanceList, getAttendanceList } = useAttendanceStore();
-  const [showAll, setShowAll] = useState<boolean>(false);
+  const [showAll, setShowAll] = useState<boolean>(true);
+  const { username, role } = useAuthStore();
 
   useEffect(() => {
     getAttendanceList();
@@ -78,11 +81,20 @@ export default function AttendanceList() {
       ]),
   };
 
+  const handleShowAll = (e: ChangeEvent<HTMLInputElement>) => {
+    setShowAll(e.currentTarget.checked)
+    if (showAll) {
+      setFilter(username);
+    } else {
+      setFilter('');
+    }
+  }
+
   const ActionButton = () => {
     return (
       <Switch
         checked={showAll}
-        onChange={(e) => setShowAll(e.currentTarget.checked)}
+        onChange={(e) => handleShowAll(e)}
         label="Show All"
       />
     );
@@ -94,7 +106,7 @@ export default function AttendanceList() {
         <TableHeader
           title="Attendance List"
           setFilter={setFilter}
-          ActionButton={<ActionButton />}
+          ActionButton={config.staff_role_id === role ? <></> : <ActionButton/>}
         />
         <TableBody tableData={tableData} />
       </Stack>
