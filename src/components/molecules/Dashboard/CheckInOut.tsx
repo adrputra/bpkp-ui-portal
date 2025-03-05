@@ -14,7 +14,7 @@ export default function CheckInOut() {
   const [action, setAction] = useState<AttendanceAction>('');
   const [data, setData] = useState<RequestAttendance>({
     username,
-    insitution_id: '',
+    institution_id: '',
     remarks: '',
   });
 
