@@ -124,3 +124,53 @@ export const getUserDetail = async (id: string) => {
     });
   }
 };
+
+export const uploadProfilePhoto = async (req: FormData) => {
+  try {
+    console.info('[REQ UPLOAD PROFILE PHOTO]');
+    const auth = useMenuStore.getState();
+    const menu_id = findMenuID(auth.menuList, '/');
+    const header = {
+      ...(useAuthStore.getState().token && {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${useAuthStore.getState().token}`,
+      }),
+      ...(menu_id && { 'app-menu-id': menu_id }),
+    };
+    const response = await sendRequestPOST(`${endpoint.baseURL}${endpoint.uploadProfilePhoto}`, req, header);
+
+    return response;
+  } catch (error: any) {
+    console.error('[UPLOAD PROFILE PHOTO ERROR]', error);
+    showNotification({
+      color: 'red',
+      title: 'Request Error',
+      message: error?.response?.data?.message || error?.response?.data || error?.message,
+    });
+  }
+};
+
+export const uploadCoverPhoto = async (req: FormData) => {
+  try {
+    console.info('[REQ UPLOAD COVER PHOTO]');
+    const auth = useMenuStore.getState();
+    const menu_id = findMenuID(auth.menuList, '/');
+    const header = {
+      ...(useAuthStore.getState().token && {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${useAuthStore.getState().token}`,
+      }),
+      ...(menu_id && { 'app-menu-id': menu_id }),
+    };
+    const response = await sendRequestPOST(`${endpoint.baseURL}${endpoint.uploadCoverPhoto}`, req, header);
+
+    return response;
+  } catch (error: any) {
+    console.error('[UPLOAD COVER PHOTO ERROR]', error);
+    showNotification({
+      color: 'red',
+      title: 'Request Error',
+      message: error?.response?.data?.message || error?.response?.data || error?.message,
+    });
+  }
+};

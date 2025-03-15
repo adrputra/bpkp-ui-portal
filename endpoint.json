@@ -10,13 +10,17 @@
     "port": "5000",
     "ping": "/ping",
     "scan": "/read-card-block",
-    "write": "/write-card-block"
+    "write": "/write-card-block",
+    "writeUser": "/write-card-user"
+    
   },
   "login": "/login",
   "logout": "/logout",
   "register": "/register",
   "user": "/user",
   "userDetail": "/user/detail",
+  "uploadProfilePhoto": "/user/profile-photo",
+  "uploadCoverPhoto": "/user/cover-photo",
   "role": "/role",
   "createRole": "/role/create",
   "roleMapping": "/role/mapping",
@@ -33,5 +37,6 @@
   "attendance": "/attendance",
   "checkIn": "/attendance/checkin",
   "checkOut": "/attendance/checkout",
-  "institution": "/institution"
+  "institution": "/institution",
+  "metabase": "/metabase"
 }

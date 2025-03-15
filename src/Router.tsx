@@ -14,6 +14,7 @@ import RoleList from './pages/role/RoleList';
 import Dashboard from './pages/dashboard/Dashboard';
 import InstitutionList from './pages/institution';
 import AttendanceList from './pages/attendance/AttendanceList';
+import NFC from './pages/nfc';
 
 const router = createBrowserRouter([
   {
@@ -87,6 +88,11 @@ const router = createBrowserRouter([
       {
         path: '/attendance',
         element: <AttendanceList />,
+        loader: authenticator,
+      },
+      {
+        path: '/nfc',
+        element: <NFC />,
         loader: authenticator,
       },
     ],

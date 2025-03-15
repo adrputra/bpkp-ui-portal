@@ -1,34 +1,41 @@
-# Mantine Vite template
+# Project Overview
+This project is a web application built using Mantine and Vite. It provides a user-friendly interface for managing user profiles, viewing dashboards, and handling various datasets.
 
 ## Features
+- User authentication and profile management.
+- Dashboard with data visualization.
+- Responsive design using Mantine components.
 
-This template comes with the following features:
+## Installation Instructions
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repo-url.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd your-repo-name
+   ```
+3. Install dependencies:
+   ```bash
+   bun install
+   ```
+4. Run the application:
+   ```bash
+   bun dev
+   ```
 
-- [PostCSS](https://postcss.org/) with [mantine-postcss-preset](https://mantine.dev/styles/postcss-preset)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Storybook](https://storybook.js.org/)
-- [Vitest](https://vitest.dev/) setup with [React Testing Library](https://testing-library.com/docs/react-testing-library/intro)
-- ESLint setup with [eslint-config-mantine](https://github.com/mantinedev/eslint-config-mantine)
+## Usage
+- **Login Page**: Access the application at `/login`.
+- **Dashboard**: View the main dashboard at `/`.
+- **User Management**: Manage users at `/user`.
+- **Dataset Management**: Handle datasets at `/dataset`.
+- Other relevant routes are available for various functionalities.
 
-## npm scripts
+## Folder Structure
+- `src/components/`: Contains reusable components.
+- `src/pages/`: Contains page components for routing.
+- `src/api/`: Contains API calls and services.
+- `src/store/`: Contains state management files.
 
-## Build and dev scripts
-
-- `dev` – start development server
-- `build` – build production version of the app
-- `preview` – locally preview production build
-
-### Testing scripts
-
-- `typecheck` – checks TypeScript types
-- `lint` – runs ESLint
-- `prettier:check` – checks files with Prettier
-- `vitest` – runs vitest tests
-- `vitest:watch` – starts vitest watch
-- `test` – runs `vitest`, `prettier:check`, `lint` and `typecheck` scripts
-
-### Other scripts
-
-- `storybook` – starts storybook dev server
-- `storybook:build` – build production storybook bundle to `storybook-static`
-- `prettier:write` – formats all files with Prettier
+## Contributing
+Contributions are welcome! Please submit a pull request or open an issue for any suggestions.

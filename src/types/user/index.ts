@@ -13,12 +13,14 @@ interface User {
     phone_number: string;
     gender: string;
     religion: string;
+    profile_photo: string;
+    cover_photo: string;
   }
   
-  interface RequestNewUser extends Omit<User, 'role_name' | 'institution_name' | 'created_at'> {
+  interface RequestNewUser extends Omit<User, 'role_name' | 'institution_name' | 'created_at' | 'profile_photo' | 'cover_photo'> {
     password: string;
     confirmPassword: string;
   }
 
-  interface RequestEditUser extends Omit<User, 'role_name' | 'institution_name' | 'created_at'> {}
+  interface RequestEditUser extends Omit<User, 'role_name' | 'institution_name' | 'created_at' | 'profile_photo' | 'cover_photo'> {}
   

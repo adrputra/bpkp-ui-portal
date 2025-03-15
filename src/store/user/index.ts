@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { showNotification } from '@mantine/notifications';
-import { createNewUser, deleteUser, getAllUser, getUserDetail, updateUser } from '@/api/user';
+import { createNewUser, deleteUser, getAllUser, getUserDetail, updateUser, uploadCoverPhoto, uploadProfilePhoto } from '@/api/user';
 import { useLayoutStore } from '../layout';
 
 const { showLoading, hideLoading } = useLayoutStore.getState();
@@ -16,6 +16,9 @@ interface UserStore {
 
   userDetail: User;
   getUserDetail: (id: string, navigate: (path: string) => void) => void;
+  uploadProfilePhoto: (req: FormData) => Promise<void>;
+  uploadCoverPhoto: (req: FormData) => Promise<void>;
+
 
   resetUserStore: () => void;
 }
@@ -94,6 +97,36 @@ export const useUserStore = create<UserStore>()((set) => ({
         set({ userDetail: res.data });
       }
     }).catch(() => navigate('/')).finally(() => {
+      hideLoading();
+    });
+  },
+
+  uploadProfilePhoto: async (req: FormData) => {
+    showLoading();
+    await uploadProfilePhoto(req).then((res) => {
+      if (res.code === 200) {
+        showNotification({
+          color: 'green',
+          title: 'Success',
+          message: res.message,
+        });
+      }
+    }).finally(() => {
+      hideLoading();
+    });
+  },
+
+  uploadCoverPhoto: async (req: FormData) => {
+    showLoading();
+    await uploadCoverPhoto(req).then((res) => {
+      if (res.code === 200) {
+        showNotification({
+          color: 'green',
+          title: 'Success',
+          message: res.message,
+        });
+      }
+    }).finally(() => {
       hideLoading();
     });
   },

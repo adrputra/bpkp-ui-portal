@@ -10,6 +10,7 @@ import {
   IconFlask,
   IconHome,
   IconIndentIncrease,
+  IconNfc,
   IconSchool,
   IconUserSquareRounded,
 } from '@tabler/icons-react';
@@ -40,10 +41,12 @@ export default function SidebarIcon({ page }: { page: string }) {
         return <IconBuildings />;
       case '/attendance':
         return <IconCalendarWeek />;
+      case '/nfc':
+        return <IconNfc />;
       default:
         return <IconClockHour5 />;
     }
   }, []);
-  
+
   return <IconContainer>{renderIcon(page.toLowerCase())}</IconContainer>;
 }
